@@ -33,4 +33,17 @@ public class ArtistController implements ArtistDAO{
 			return null;
 		}
 	}
+
+	public List<Artist> getArtistsInCharts(){
+		try{
+			ResultSet r = db.startQuery("select AVG(ranks.rank) as points, artists.id, artists.name, artists.country from ranks join albums on ranks.album_id = albums.id join artists on albums.artist_id = artists.id group by artists.id order by 1 asc").runQuery();
+			List<Artist> l = new ArrayList();
+			while(r.next()){
+				l.add(new Artist(r.getInt("artists.id"), r.getString("artists.name"), r.getString("artists.country")));
+			}
+			return l;
+		}catch(Exception e){
+			return null;
+		}
+	}
 }
