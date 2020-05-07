@@ -2,13 +2,16 @@ package ServerApplication;
 
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 class GameServer{
 	private ServerSocket server = null;
 	private boolean running = true;
+	public List<Game> gamesInWaiting;
 
 	GameServer(int port, int timeout){
 		try{
+			gamesInWaiting = new ArrayList();
 			server = new ServerSocket(port);
 			server.setSoTimeout(timeout);
 			server.setReuseAddress(true);
